@@ -1,0 +1,28 @@
+{
+  "name": "refrigeracao-do-jair",
+  "version": "1.0.0",
+  "description": "Projeto de sistema de Ordem de Servico para refrigeraçao",
+  "homepage": "https://github.com/caio-huzar/Projeto_Refrigeracao#readme",
+  "bugs": {
+    "url": "https://github.com/caio-huzar/Projeto_Refrigeracao/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/caio-huzar/Projeto_Refrigeracao.git"
+  },
+  "license": "ISC",
+  "author": "Caio Huzar,Raoni S.,Vitor Werle,Carlos Dozorets,Henrique de Moura,Eduardo Valtrim",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "cors": "^2.8.6",
+    "express": "^5.2.1",
+    "pg": "^8.23.0",
+    "pg-hstore": "^2.3.4",
+    "sequelize": "^6.37.8",
+    "sqlite3": "^6.0.1"
+  }
+}
