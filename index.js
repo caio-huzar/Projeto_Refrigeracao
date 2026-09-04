@@ -1,7 +1,7 @@
 const express = require('express');
 const sequelize = require('./config/database'); // Ajuste o caminho da sua conexão com o banco
 
-// Importação das Rotas
+
 const userRoute = require('./routes/userRoute');
 const clienteRoute = require('./routes/clienteRoute');
 const tecnicoRoute = require('./routes/tecnicoRoute');
@@ -13,6 +13,9 @@ const app = express();
 
 // Middleware para interpretar requisições JSON
 app.use(express.json());
+const swaggerUi = require('swagger-ui-express');
+
+const swaggerSpec = require('./swagger');
 
 // Registro das Rotas
 app.use(userRoute);
@@ -24,6 +27,12 @@ app.use(OSRoute);
 
 // Teste de conexão com o banco e inicialização do servidor
 const PORT = process.env.PORT || 3000;
+
+app.use(
+    '/docs',
+    swaggerUi.serve,
+    swaggerUi.setup(swaggerSpec)
+);
 
 sequelize.authenticate()
   .then(() => {
