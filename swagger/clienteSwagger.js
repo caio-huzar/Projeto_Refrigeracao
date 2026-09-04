@@ -44,7 +44,6 @@ const clienteSwagger = {
                                     },
                                     telefone:{
                                         type: 'string',
-                                        nullable: true,
                                         example: '42999999999'
                                     },
                                     cpf_cnpj:{
@@ -53,17 +52,31 @@ const clienteSwagger = {
                                     },
                                     rua:{
                                         type: 'string',
-                                        nullable: true,
                                         example: 'Rua Sla Nao Sei'
                                     },
                                     numero_casa:{
                                         type: 'integer',
-                                        nullable: true,
                                         example: 69
+                                    },
+                                    bairro:{
+                                        type: 'string',
+                                        example: 'Vila tal'
+                                    },
+                                    cep:{
+                                        type: 'integer',
+                                        example: 83900000
+                                    },
+                                    cidade:{
+                                        type: 'string',
+                                        example: 'Uniao da Vitoria'
+                                    },
+                                    estado:{
+                                        type: 'string',
+                                        example: 'Parana'
                                     }
                                 },
 
-                                required: ['cliente_nome']
+                                required: ['id_usuario', 'nome', 'telefone', 'cpf_cnpj', 'rua', 'numero_casa', 'bairro', 'cep', 'cidade', 'estado']
                             }
                         }
                     }
@@ -149,13 +162,49 @@ const clienteSwagger = {
                                 type: 'object',
 
                                 properties: {
-                                    car_nome: {
+                                    id_usuario:{
+                                        type: 'integer',
+                                        example: 1
+                                    },
+                                    nome: {
                                         type: 'string',
-                                        example: 'Desenvolvedor Backend'
+                                        example: 'Caio Huzar'
+                                    },
+                                    telefone:{
+                                        type: 'string',
+                                        example: '42999999999'
+                                    },
+                                    cpf_cnpj:{
+                                        type: 'string',
+                                        example: '11122233344'
+                                    },
+                                    rua:{
+                                        type: 'string',
+                                        example: 'Rua Sla Nao Sei'
+                                    },
+                                    numero_casa:{
+                                        type: 'integer',
+                                        example: 69
+                                    },
+                                    bairro:{
+                                        type: 'string',
+                                        example: 'Vila tal'
+                                    },
+                                    cep:{
+                                        type: 'integer',
+                                        example: 83900000
+                                    },
+                                    cidade:{
+                                        type: 'string',
+                                        example: 'Uniao da Vitoria'
+                                    },
+                                    estado:{
+                                        type: 'string',
+                                        example: 'Parana'
                                     }
                                 },
 
-                                required: ['cliente_nome']
+                                required: ['id_usuario', 'nome', 'telefone', 'cpf_cnpj', 'rua', 'numero_casa', 'bairro', 'cep', 'cidade', 'estado']
                             }
                         }
                     }
