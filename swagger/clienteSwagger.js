@@ -45,7 +45,7 @@ const clienteSwagger = {
                                     telefone:{
                                         type: 'string',
                                         nullable: true,
-                                        example; '42999999999'
+                                        example: '42999999999'
                                     },
                                     cpf_cnpj:{
                                         type: 'string',
