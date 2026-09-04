@@ -1,3 +1,5 @@
+const { type } = require("express/lib/response");
+
 const clienteSwagger = {
     paths: {
 
@@ -32,9 +34,32 @@ const clienteSwagger = {
                                 type: 'object',
 
                                 properties: {
-                                    car_nome: {
+                                    id_usuario:{
+                                        type: 'integer',
+                                        example: 1
+                                    },
+                                    nome: {
                                         type: 'string',
-                                        example: 'Desenvolvedor'
+                                        example: 'Caio Huzar'
+                                    },
+                                    telefone:{
+                                        type: 'string',
+                                        nullable: true,
+                                        example; '42999999999'
+                                    },
+                                    cpf_cnpj:{
+                                        type: 'string',
+                                        example: '11122233344'
+                                    },
+                                    rua:{
+                                        type: 'string',
+                                        nullable: true,
+                                        example: 'Rua Sla Nao Sei'
+                                    },
+                                    numero_casa:{
+                                        type: 'integer',
+                                        nullable: true,
+                                        example: 69
                                     }
                                 },
 
