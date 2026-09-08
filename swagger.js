@@ -1,4 +1,9 @@
-const cargoSwagger = require('./swagger/clienteSwagger');
+const clienteSwagger = require('./swagger/clienteSwagger');
+const osSwagger = require('./swagger/OSSwagger');
+const pecaSwagger = require('./swagger/pecaSwagger');
+const servicoSwagger = require('./swagger/servicoSwagger');
+const tecnicoSwagger = require('./swagger/tecnicoSwagger');
+const userSwagger = require('./swagger/userSwagger');
 
 const swaggerSpec = {
     openapi: '3.0.0',
@@ -16,7 +21,12 @@ const swaggerSpec = {
     ],
 
     paths: {
-        ...cargoSwagger.paths
+        ...clienteSwagger.paths,
+        ...osSwagger.paths,
+        ...pecaSwagger.paths,
+        ...servicoSwagger.paths,
+        ...tecnicoSwagger.paths,
+        ...userSwagger.paths
     }
 };
 

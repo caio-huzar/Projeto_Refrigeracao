@@ -63,7 +63,7 @@ const clienteSwagger = {
                                         example: 'Vila tal'
                                     },
                                     cep:{
-                                        type: 'integer',
+                                        type: 'string',
                                         example: 83900000
                                     },
                                     cidade:{
@@ -191,7 +191,7 @@ const clienteSwagger = {
                                         example: 'Vila tal'
                                     },
                                     cep:{
-                                        type: 'integer',
+                                        type: 'string',
                                         example: 83900000
                                     },
                                     cidade:{
