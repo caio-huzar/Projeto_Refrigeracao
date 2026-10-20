@@ -1,35 +1,41 @@
-const express = require('express');
-const sequelize = require('./config/database');
+require('dotenv').config();
 
+const express = require('express');
+const cors = require('cors');
+const swaggerUi = require('swagger-ui-express');
+
+const sequelize = require('./config/database');
+const swaggerSpec = require('./swagger');
 
 const userRoute = require('./routes/userRoute');
 const clienteRoute = require('./routes/clienteRoute');
 const tecnicoRoute = require('./routes/tecnicoRoute');
 const pecaRoute = require('./routes/pecaRoute');
 const servicoRoute = require('./routes/servicoRoute');
-const OSRoute = require('./routes/OSRoute');
+const osRoutes = require('./routes/osRoutes');
+const agendamentoRoutes = require('./routes/agendamentoRoutes');
+const horarioDisponivelRoutes = require('./routes/horarioDisponivelRoutes');
 
 const app = express();
 
+app.use(cors());
 app.use(express.json());
-const swaggerUi = require('swagger-ui-express');
 
-const swaggerSpec = require('./swagger');
+app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
+// Rotas que já definem o caminho completo dentro do arquivo
 app.use(userRoute);
 app.use(clienteRoute);
 app.use(tecnicoRoute);
 app.use(pecaRoute);
 app.use(servicoRoute);
-app.use(OSRoute);
+
+// Rotas que usam '/' e dependem do prefixo montado aqui
+app.use('/os', osRoutes);
+app.use('/agendamentos', agendamentoRoutes);
+app.use('/horarios', horarioDisponivelRoutes);
 
 const PORT = process.env.PORT || 3000;
-
-app.use(
-    '/docs',
-    swaggerUi.serve,
-    swaggerUi.setup(swaggerSpec)
-);
 
 sequelize.authenticate()
   .then(() => {
@@ -39,5 +45,6 @@ sequelize.authenticate()
     });
   })
   .catch((error) => {
-    console.error('Nao foi possivel conectar ao banco de dados:', error);
+    console.error('Nao foi possivel conectar ao banco de dados:', error.message);
+    process.exit(1);
   });

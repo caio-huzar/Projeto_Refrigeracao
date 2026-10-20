@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const controller = require('../controllers/osController');
+const controller = require('../controllers/OSController');
 const pecaController = require('../controllers/osPecaController');
 
 router.post('/', controller.criar);
