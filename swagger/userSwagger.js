@@ -1,15 +1,14 @@
 const userSwagger = {
     paths: {
 
-        // LISTAR USUÁRIOS
         '/usuarios': {
             get: {
-                tags: ['Usuários'],
-                summary: 'Lista todos os usuários',
+                tags: ['Usuarios'],
+                summary: 'Lista todos os usuarios',
 
                 responses: {
                     200: {
-                        description: 'Lista de usuários retornada com sucesso'
+                        description: 'Lista de usuarios retornada com sucesso'
                     },
 
                     500: {
@@ -18,10 +17,9 @@ const userSwagger = {
                 }
             },
 
-            // INSERIR USUÁRIO
             post: {
-                tags: ['Usuários'],
-                summary: 'Cadastra um novo usuário',
+                tags: ['Usuarios'],
+                summary: 'Cadastra um novo usuario',
 
                 requestBody: {
                     required: true,
@@ -70,11 +68,11 @@ const userSwagger = {
 
                 responses: {
                     201: {
-                        description: 'Usuário cadastrado com sucesso'
+                        description: 'Usuario cadastrado com sucesso'
                     },
 
                     400: {
-                        description: 'Dados inválidos'
+                        description: 'Dados invalidos'
                     },
 
                     500: {
@@ -84,12 +82,11 @@ const userSwagger = {
             }
         },
 
-        // BUSCAR USUÁRIO POR ID
         '/usuarios/{id}': {
 
             get: {
-                tags: ['Usuários'],
-                summary: 'Busca um usuário pelo ID',
+                tags: ['Usuarios'],
+                summary: 'Busca um usuario pelo ID',
 
                 parameters: [
                     {
@@ -101,17 +98,17 @@ const userSwagger = {
                             type: 'integer'
                         },
 
-                        description: 'ID do usuário'
+                        description: 'ID do usuario'
                     }
                 ],
 
                 responses: {
                     200: {
-                        description: 'Usuário encontrado'
+                        description: 'Usuario encontrado'
                     },
 
                     404: {
-                        description: 'Usuário não encontrado'
+                        description: 'Usuario nao encontrado'
                     },
 
                     500: {
@@ -120,10 +117,9 @@ const userSwagger = {
                 }
             },
 
-            // ALTERAR USUÁRIO
             put: {
-                tags: ['Usuários'],
-                summary: 'Altera um usuário',
+                tags: ['Usuarios'],
+                summary: 'Altera um usuario',
 
                 parameters: [
                     {
@@ -135,7 +131,7 @@ const userSwagger = {
                             type: 'integer'
                         },
 
-                        description: 'ID do usuário'
+                        description: 'ID do usuario'
                     }
                 ],
 
@@ -186,11 +182,11 @@ const userSwagger = {
 
                 responses: {
                     200: {
-                        description: 'Usuário alterado com sucesso'
+                        description: 'Usuario alterado com sucesso'
                     },
 
                     404: {
-                        description: 'Usuário não encontrado'
+                        description: 'Usuario nao encontrado'
                     },
 
                     500: {
@@ -199,10 +195,9 @@ const userSwagger = {
                 }
             },
 
-            // EXCLUIR USUÁRIO
             delete: {
-                tags: ['Usuários'],
-                summary: 'Exclui um usuário',
+                tags: ['Usuarios'],
+                summary: 'Exclui um usuario',
 
                 parameters: [
                     {
@@ -214,17 +209,17 @@ const userSwagger = {
                             type: 'integer'
                         },
 
-                        description: 'ID do usuário'
+                        description: 'ID do usuario'
                     }
                 ],
 
                 responses: {
                     200: {
-                        description: 'Usuário excluído com sucesso'
+                        description: 'Usuario excluido com sucesso'
                     },
 
                     404: {
-                        description: 'Usuário não encontrado'
+                        description: 'Usuario nao encontrado'
                     },
 
                     500: {

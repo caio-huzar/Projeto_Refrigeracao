@@ -1,7 +1,7 @@
 {
   "name": "refrigeracao-do-jair",
   "version": "1.0.0",
-  "description": "Projeto de sistema de Ordem de Servico para refrigeraçao",
+  "description": "Projeto de sistema de Ordem de Servico para refrigeracao",
   "homepage": "https://github.com/caio-huzar/Projeto_Refrigeracao#readme",
   "bugs": {
     "url": "https://github.com/caio-huzar/Projeto_Refrigeracao/issues"
@@ -28,3 +28,4 @@
     "swagger-ui-express": "^5.0.1"
   }
 }
+\

@@ -15,7 +15,7 @@ module.exports = {
     try {
       const { id } = req.params;
       const data = await Cliente.findByPk(id, { include: { model: User, attributes: ['email', 'cargo', 'esta_ativo'] } });
-      if (!data) return res.status(404).json({ error: 'Cliente não encontrado' });
+      if (!data) return res.status(404).json({ error: 'Cliente nao encontrado' });
       return res.json(data);
     } catch (error) {
       return res.status(500).json({ error: 'Erro ao buscar cliente', details: error.message });
@@ -35,7 +35,7 @@ module.exports = {
     try {
       const { id } = req.params;
       const cliente = await Cliente.findByPk(id);
-      if (!cliente) return res.status(404).json({ error: 'Cliente não encontrado' });
+      if (!cliente) return res.status(404).json({ error: 'Cliente nao encontrado' });
 
       await cliente.update(req.body);
       return res.json(cliente);
@@ -48,7 +48,7 @@ module.exports = {
     try {
       const { id } = req.params;
       const cliente = await Cliente.findByPk(id);
-      if (!cliente) return res.status(404).json({ error: 'Cliente não encontrado' });
+      if (!cliente) return res.status(404).json({ error: 'Cliente nao encontrado' });
 
       await cliente.destroy();
       return res.status(204).send();

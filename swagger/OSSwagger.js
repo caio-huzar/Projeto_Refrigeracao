@@ -1,15 +1,14 @@
 const osSwagger = {
     paths: {
 
-        // LISTAR ORDENS DE SERVIÇO
         '/os': {
             get: {
-                tags: ['Ordens de Serviço'],
-                summary: 'Lista todas as ordens de serviço',
+                tags: ['Ordens de Servico'],
+                summary: 'Lista todas as ordens de servico',
 
                 responses: {
                     200: {
-                        description: 'Lista de ordens de serviço retornada com sucesso'
+                        description: 'Lista de ordens de servico retornada com sucesso'
                     },
 
                     500: {
@@ -18,10 +17,9 @@ const osSwagger = {
                 }
             },
 
-            // INSERIR ORDEM DE SERVIÇO
             post: {
-                tags: ['Ordens de Serviço'],
-                summary: 'Cadastra uma nova ordem de serviço',
+                tags: ['Ordens de Servico'],
+                summary: 'Cadastra uma nova ordem de servico',
 
                 requestBody: {
                     required: true,
@@ -49,7 +47,7 @@ const osSwagger = {
 
                                     descricao_problema: {
                                         type: 'string',
-                                        example: 'Geladeira não está refrigerando'
+                                        example: 'Geladeira nao esta refrigerando'
                                     },
 
                                     data_agendada: {
@@ -99,11 +97,11 @@ const osSwagger = {
 
                 responses: {
                     201: {
-                        description: 'Ordem de serviço cadastrada com sucesso'
+                        description: 'Ordem de servico cadastrada com sucesso'
                     },
 
                     400: {
-                        description: 'Dados inválidos'
+                        description: 'Dados invalidos'
                     },
 
                     500: {
@@ -113,12 +111,11 @@ const osSwagger = {
             }
         },
 
-        // BUSCAR ORDEM DE SERVIÇO POR ID
         '/os/{id}': {
 
             get: {
-                tags: ['Ordens de Serviço'],
-                summary: 'Busca uma ordem de serviço pelo ID',
+                tags: ['Ordens de Servico'],
+                summary: 'Busca uma ordem de servico pelo ID',
 
                 parameters: [
                     {
@@ -130,17 +127,17 @@ const osSwagger = {
                             type: 'integer'
                         },
 
-                        description: 'ID da ordem de serviço'
+                        description: 'ID da ordem de servico'
                     }
                 ],
 
                 responses: {
                     200: {
-                        description: 'Ordem de serviço encontrada'
+                        description: 'Ordem de servico encontrada'
                     },
 
                     404: {
-                        description: 'Ordem de serviço não encontrada'
+                        description: 'Ordem de servico nao encontrada'
                     },
 
                     500: {
@@ -149,10 +146,9 @@ const osSwagger = {
                 }
             },
 
-            // ALTERAR ORDEM DE SERVIÇO
             put: {
-                tags: ['Ordens de Serviço'],
-                summary: 'Altera uma ordem de serviço',
+                tags: ['Ordens de Servico'],
+                summary: 'Altera uma ordem de servico',
 
                 parameters: [
                     {
@@ -164,7 +160,7 @@ const osSwagger = {
                             type: 'integer'
                         },
 
-                        description: 'ID da ordem de serviço'
+                        description: 'ID da ordem de servico'
                     }
                 ],
 
@@ -194,7 +190,7 @@ const osSwagger = {
 
                                     descricao_problema: {
                                         type: 'string',
-                                        example: 'Geladeira não está refrigerando'
+                                        example: 'Geladeira nao esta refrigerando'
                                     },
 
                                     data_agendada: {
@@ -244,11 +240,11 @@ const osSwagger = {
 
                 responses: {
                     200: {
-                        description: 'Ordem de serviço alterada com sucesso'
+                        description: 'Ordem de servico alterada com sucesso'
                     },
 
                     404: {
-                        description: 'Ordem de serviço não encontrada'
+                        description: 'Ordem de servico nao encontrada'
                     },
 
                     500: {
@@ -257,10 +253,9 @@ const osSwagger = {
                 }
             },
 
-            // EXCLUIR ORDEM DE SERVIÇO
             delete: {
-                tags: ['Ordens de Serviço'],
-                summary: 'Exclui uma ordem de serviço',
+                tags: ['Ordens de Servico'],
+                summary: 'Exclui uma ordem de servico',
 
                 parameters: [
                     {
@@ -272,17 +267,17 @@ const osSwagger = {
                             type: 'integer'
                         },
 
-                        description: 'ID da ordem de serviço'
+                        description: 'ID da ordem de servico'
                     }
                 ],
 
                 responses: {
                     200: {
-                        description: 'Ordem de serviço excluída com sucesso'
+                        description: 'Ordem de servico excluida com sucesso'
                     },
 
                     404: {
-                        description: 'Ordem de serviço não encontrada'
+                        description: 'Ordem de servico nao encontrada'
                     },
 
                     500: {

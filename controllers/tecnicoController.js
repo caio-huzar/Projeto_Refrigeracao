@@ -6,7 +6,7 @@ module.exports = {
       const data = await Tecnico.findAll();
       return res.json(data);
     } catch (error) {
-      return res.status(500).json({ error: 'Erro ao buscar técnicos', details: error.message });
+      return res.status(500).json({ error: 'Erro ao buscar tecnicos', details: error.message });
     }
   },
 
@@ -14,10 +14,10 @@ module.exports = {
     try {
       const { id } = req.params;
       const data = await Tecnico.findByPk(id);
-      if (!data) return res.status(404).json({ error: 'Técnico não encontrado' });
+      if (!data) return res.status(404).json({ error: 'Tecnico nao encontrado' });
       return res.json(data);
     } catch (error) {
-      return res.status(500).json({ error: 'Erro ao buscar técnico', details: error.message });
+      return res.status(500).json({ error: 'Erro ao buscar tecnico', details: error.message });
     }
   },
 
@@ -26,7 +26,7 @@ module.exports = {
       const data = await Tecnico.create(req.body);
       return res.status(201).json(data);
     } catch (error) {
-      return res.status(400).json({ error: 'Erro ao criar técnico', details: error.message });
+      return res.status(400).json({ error: 'Erro ao criar tecnico', details: error.message });
     }
   },
 
@@ -34,12 +34,12 @@ module.exports = {
     try {
       const { id } = req.params;
       const tecnico = await Tecnico.findByPk(id);
-      if (!tecnico) return res.status(404).json({ error: 'Técnico não encontrado' });
+      if (!tecnico) return res.status(404).json({ error: 'Tecnico nao encontrado' });
 
       await tecnico.update(req.body);
       return res.json(tecnico);
     } catch (error) {
-      return res.status(400).json({ error: 'Erro ao atualizar técnico', details: error.message });
+      return res.status(400).json({ error: 'Erro ao atualizar tecnico', details: error.message });
     }
   },
 
@@ -47,12 +47,12 @@ module.exports = {
     try {
       const { id } = req.params;
       const tecnico = await Tecnico.findByPk(id);
-      if (!tecnico) return res.status(404).json({ error: 'Técnico não encontrado' });
+      if (!tecnico) return res.status(404).json({ error: 'Tecnico nao encontrado' });
 
       await tecnico.destroy();
       return res.status(204).send();
     } catch (error) {
-      return res.status(500).json({ error: 'Erro ao deletar técnico', details: error.message });
+      return res.status(500).json({ error: 'Erro ao deletar tecnico', details: error.message });
     }
   }
 };

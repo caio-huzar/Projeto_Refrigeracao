@@ -6,7 +6,7 @@ module.exports = {
       const data = await Servico.findAll();
       return res.json(data);
     } catch (error) {
-      return res.status(500).json({ error: 'Erro ao buscar serviços', details: error.message });
+      return res.status(500).json({ error: 'Erro ao buscar servicos', details: error.message });
     }
   },
 
@@ -14,10 +14,10 @@ module.exports = {
     try {
       const { id } = req.params;
       const data = await Servico.findByPk(id);
-      if (!data) return res.status(404).json({ error: 'Serviço não encontrado' });
+      if (!data) return res.status(404).json({ error: 'Servico nao encontrado' });
       return res.json(data);
     } catch (error) {
-      return res.status(500).json({ error: 'Erro ao buscar serviço', details: error.message });
+      return res.status(500).json({ error: 'Erro ao buscar servico', details: error.message });
     }
   },
 
@@ -26,7 +26,7 @@ module.exports = {
       const data = await Servico.create(req.body);
       return res.status(201).json(data);
     } catch (error) {
-      return res.status(400).json({ error: 'Erro ao criar serviço', details: error.message });
+      return res.status(400).json({ error: 'Erro ao criar servico', details: error.message });
     }
   },
 
@@ -34,12 +34,12 @@ module.exports = {
     try {
       const { id } = req.params;
       const servico = await Servico.findByPk(id);
-      if (!servico) return res.status(404).json({ error: 'Serviço não encontrado' });
+      if (!servico) return res.status(404).json({ error: 'Servico nao encontrado' });
 
       await servico.update(req.body);
       return res.json(servico);
     } catch (error) {
-      return res.status(400).json({ error: 'Erro ao atualizar serviço', details: error.message });
+      return res.status(400).json({ error: 'Erro ao atualizar servico', details: error.message });
     }
   },
 
@@ -47,12 +47,12 @@ module.exports = {
     try {
       const { id } = req.params;
       const servico = await Servico.findByPk(id);
-      if (!servico) return res.status(404).json({ error: 'Serviço não encontrado' });
+      if (!servico) return res.status(404).json({ error: 'Servico nao encontrado' });
 
       await servico.destroy();
       return res.status(204).send();
     } catch (error) {
-      return res.status(500).json({ error: 'Erro ao deletar serviço', details: error.message });
+      return res.status(500).json({ error: 'Erro ao deletar servico', details: error.message });
     }
   }
 };

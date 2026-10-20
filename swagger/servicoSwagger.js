@@ -1,15 +1,14 @@
 const servicoSwagger = {
     paths: {
 
-        // LISTAR SERVIÇOS
         '/servicos': {
             get: {
-                tags: ['Serviços'],
-                summary: 'Lista todos os serviços',
+                tags: ['Servicos'],
+                summary: 'Lista todos os servicos',
 
                 responses: {
                     200: {
-                        description: 'Lista de serviços retornada com sucesso'
+                        description: 'Lista de servicos retornada com sucesso'
                     },
 
                     500: {
@@ -18,10 +17,9 @@ const servicoSwagger = {
                 }
             },
 
-            // INSERIR SERVIÇO
             post: {
-                tags: ['Serviços'],
-                summary: 'Cadastra um novo serviço',
+                tags: ['Servicos'],
+                summary: 'Cadastra um novo servico',
 
                 requestBody: {
                     required: true,
@@ -34,12 +32,12 @@ const servicoSwagger = {
                                 properties: {
                                     nome: {
                                         type: 'string',
-                                        example: 'Manutenção de geladeira'
+                                        example: 'Manutencao de geladeira'
                                     },
 
                                     descricao: {
                                         type: 'string',
-                                        example: 'Manutenção completa do sistema de refrigeração'
+                                        example: 'Manutencao completa do sistema de refrigeracao'
                                     },
 
                                     valor: {
@@ -60,11 +58,11 @@ const servicoSwagger = {
 
                 responses: {
                     201: {
-                        description: 'Serviço cadastrado com sucesso'
+                        description: 'Servico cadastrado com sucesso'
                     },
 
                     400: {
-                        description: 'Dados inválidos'
+                        description: 'Dados invalidos'
                     },
 
                     500: {
@@ -74,12 +72,11 @@ const servicoSwagger = {
             }
         },
 
-        // BUSCAR SERVIÇO POR ID
         '/servicos/{id}': {
 
             get: {
-                tags: ['Serviços'],
-                summary: 'Busca um serviço pelo ID',
+                tags: ['Servicos'],
+                summary: 'Busca um servico pelo ID',
 
                 parameters: [
                     {
@@ -91,17 +88,17 @@ const servicoSwagger = {
                             type: 'integer'
                         },
 
-                        description: 'ID do serviço'
+                        description: 'ID do servico'
                     }
                 ],
 
                 responses: {
                     200: {
-                        description: 'Serviço encontrado'
+                        description: 'Servico encontrado'
                     },
 
                     404: {
-                        description: 'Serviço não encontrado'
+                        description: 'Servico nao encontrado'
                     },
 
                     500: {
@@ -110,10 +107,9 @@ const servicoSwagger = {
                 }
             },
 
-            // ALTERAR SERVIÇO
             put: {
-                tags: ['Serviços'],
-                summary: 'Altera um serviço',
+                tags: ['Servicos'],
+                summary: 'Altera um servico',
 
                 parameters: [
                     {
@@ -125,7 +121,7 @@ const servicoSwagger = {
                             type: 'integer'
                         },
 
-                        description: 'ID do serviço'
+                        description: 'ID do servico'
                     }
                 ],
 
@@ -140,12 +136,12 @@ const servicoSwagger = {
                                 properties: {
                                     nome: {
                                         type: 'string',
-                                        example: 'Manutenção de geladeira'
+                                        example: 'Manutencao de geladeira'
                                     },
 
                                     descricao: {
                                         type: 'string',
-                                        example: 'Manutenção completa do sistema de refrigeração'
+                                        example: 'Manutencao completa do sistema de refrigeracao'
                                     },
 
                                     valor: {
@@ -166,11 +162,11 @@ const servicoSwagger = {
 
                 responses: {
                     200: {
-                        description: 'Serviço alterado com sucesso'
+                        description: 'Servico alterado com sucesso'
                     },
 
                     404: {
-                        description: 'Serviço não encontrado'
+                        description: 'Servico nao encontrado'
                     },
 
                     500: {
@@ -179,10 +175,9 @@ const servicoSwagger = {
                 }
             },
 
-            // EXCLUIR SERVIÇO
             delete: {
-                tags: ['Serviços'],
-                summary: 'Exclui um serviço',
+                tags: ['Servicos'],
+                summary: 'Exclui um servico',
 
                 parameters: [
                     {
@@ -194,17 +189,17 @@ const servicoSwagger = {
                             type: 'integer'
                         },
 
-                        description: 'ID do serviço'
+                        description: 'ID do servico'
                     }
                 ],
 
                 responses: {
                     200: {
-                        description: 'Serviço excluído com sucesso'
+                        description: 'Servico excluido com sucesso'
                     },
 
                     404: {
-                        description: 'Serviço não encontrado'
+                        description: 'Servico nao encontrado'
                     },
 
                     500: {

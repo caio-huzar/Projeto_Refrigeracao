@@ -4,6 +4,8 @@ const pecaSwagger = require('./swagger/pecaSwagger');
 const servicoSwagger = require('./swagger/servicoSwagger');
 const tecnicoSwagger = require('./swagger/tecnicoSwagger');
 const userSwagger = require('./swagger/userSwagger');
+const horarioSwagger = require('./swagger/horarioSwagger');
+const agendamentoSwagger = require('./swagger/agendamentoSwagger');
 
 const swaggerSpec = {
     openapi: '3.0.0',
@@ -11,7 +13,7 @@ const swaggerSpec = {
     info: {
         title: 'API - Sistema',
         version: '1.0.0',
-        description: 'Documentação da API do sistema'
+        description: 'Documentacao da API do sistema'
     },
 
     servers: [
@@ -26,7 +28,9 @@ const swaggerSpec = {
         ...pecaSwagger.paths,
         ...servicoSwagger.paths,
         ...tecnicoSwagger.paths,
-        ...userSwagger.paths
+        ...userSwagger.paths,
+        ...horarioSwagger.paths,
+        ...agendamentoSwagger.paths
     }
 };
 

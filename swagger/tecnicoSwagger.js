@@ -1,15 +1,14 @@
 const tecnicoSwagger = {
     paths: {
 
-        // LISTAR TÉCNICOS
         '/tecnicos': {
             get: {
-                tags: ['Técnicos'],
-                summary: 'Lista todos os técnicos',
+                tags: ['Tecnicos'],
+                summary: 'Lista todos os tecnicos',
 
                 responses: {
                     200: {
-                        description: 'Lista de técnicos retornada com sucesso'
+                        description: 'Lista de tecnicos retornada com sucesso'
                     },
 
                     500: {
@@ -18,10 +17,9 @@ const tecnicoSwagger = {
                 }
             },
 
-            // INSERIR TÉCNICO
             post: {
-                tags: ['Técnicos'],
-                summary: 'Cadastra um novo técnico',
+                tags: ['Tecnicos'],
+                summary: 'Cadastra um novo tecnico',
 
                 requestBody: {
                     required: true,
@@ -34,7 +32,7 @@ const tecnicoSwagger = {
                                 properties: {
                                     nome: {
                                         type: 'string',
-                                        example: 'João da Silva'
+                                        example: 'Joao da Silva'
                                     },
 
                                     telefone: {
@@ -54,11 +52,11 @@ const tecnicoSwagger = {
 
                 responses: {
                     201: {
-                        description: 'Técnico cadastrado com sucesso'
+                        description: 'Tecnico cadastrado com sucesso'
                     },
 
                     400: {
-                        description: 'Dados inválidos'
+                        description: 'Dados invalidos'
                     },
 
                     500: {
@@ -68,12 +66,11 @@ const tecnicoSwagger = {
             }
         },
 
-        // BUSCAR TÉCNICO POR ID
         '/tecnicos/{id}': {
 
             get: {
-                tags: ['Técnicos'],
-                summary: 'Busca um técnico pelo ID',
+                tags: ['Tecnicos'],
+                summary: 'Busca um tecnico pelo ID',
 
                 parameters: [
                     {
@@ -85,17 +82,17 @@ const tecnicoSwagger = {
                             type: 'integer'
                         },
 
-                        description: 'ID do técnico'
+                        description: 'ID do tecnico'
                     }
                 ],
 
                 responses: {
                     200: {
-                        description: 'Técnico encontrado'
+                        description: 'Tecnico encontrado'
                     },
 
                     404: {
-                        description: 'Técnico não encontrado'
+                        description: 'Tecnico nao encontrado'
                     },
 
                     500: {
@@ -104,10 +101,9 @@ const tecnicoSwagger = {
                 }
             },
 
-            // ALTERAR TÉCNICO
             put: {
-                tags: ['Técnicos'],
-                summary: 'Altera um técnico',
+                tags: ['Tecnicos'],
+                summary: 'Altera um tecnico',
 
                 parameters: [
                     {
@@ -119,7 +115,7 @@ const tecnicoSwagger = {
                             type: 'integer'
                         },
 
-                        description: 'ID do técnico'
+                        description: 'ID do tecnico'
                     }
                 ],
 
@@ -134,7 +130,7 @@ const tecnicoSwagger = {
                                 properties: {
                                     nome: {
                                         type: 'string',
-                                        example: 'João da Silva'
+                                        example: 'Joao da Silva'
                                     },
 
                                     telefone: {
@@ -154,11 +150,11 @@ const tecnicoSwagger = {
 
                 responses: {
                     200: {
-                        description: 'Técnico alterado com sucesso'
+                        description: 'Tecnico alterado com sucesso'
                     },
 
                     404: {
-                        description: 'Técnico não encontrado'
+                        description: 'Tecnico nao encontrado'
                     },
 
                     500: {
@@ -167,10 +163,9 @@ const tecnicoSwagger = {
                 }
             },
 
-            // EXCLUIR TÉCNICO
             delete: {
-                tags: ['Técnicos'],
-                summary: 'Exclui um técnico',
+                tags: ['Tecnicos'],
+                summary: 'Exclui um tecnico',
 
                 parameters: [
                     {
@@ -182,17 +177,17 @@ const tecnicoSwagger = {
                             type: 'integer'
                         },
 
-                        description: 'ID do técnico'
+                        description: 'ID do tecnico'
                     }
                 ],
 
                 responses: {
                     200: {
-                        description: 'Técnico excluído com sucesso'
+                        description: 'Tecnico excluido com sucesso'
                     },
 
                     404: {
-                        description: 'Técnico não encontrado'
+                        description: 'Tecnico nao encontrado'
                     },
 
                     500: {

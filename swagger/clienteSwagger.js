@@ -3,7 +3,6 @@ const { type } = require("express/lib/response");
 const clienteSwagger = {
     paths: {
 
-        // LISTAR CLIENTES
         '/clientes': {
             get: {
                 tags: ['Clientes'],
@@ -20,7 +19,6 @@ const clienteSwagger = {
                 }
             },
 
-            // INSERIR CLIENTES
             post: {
                 tags: ['Clientes'],
                 summary: 'Cadastra um novo cliente',
@@ -88,7 +86,7 @@ const clienteSwagger = {
                     },
 
                     400: {
-                        description: 'Dados inválidos'
+                        description: 'Dados invalidos'
                     },
 
                     500: {
@@ -98,7 +96,6 @@ const clienteSwagger = {
             }
         },
 
-        // BUSCAR CLIENTES POR ID
         '/clientes/{id}': {
 
             get: {
@@ -125,7 +122,7 @@ const clienteSwagger = {
                     },
 
                     404: {
-                        description: 'Cliente não encontrado'
+                        description: 'Cliente nao encontrado'
                     },
 
                     500: {
@@ -134,7 +131,6 @@ const clienteSwagger = {
                 }
             },
 
-            // ALTERAR CLIENTE
             put: {
                 tags: ['Clientes'],
                 summary: 'Altera um Cliente',
@@ -216,7 +212,7 @@ const clienteSwagger = {
                     },
 
                     404: {
-                        description: 'Cliente não encontrado'
+                        description: 'Cliente nao encontrado'
                     },
 
                     500: {
@@ -225,7 +221,6 @@ const clienteSwagger = {
                 }
             },
 
-            // EXCLUIR CLIENTE
             delete: {
                 tags: ['Clientes'],
                 summary: 'Exclui um cliente',
@@ -246,11 +241,11 @@ const clienteSwagger = {
 
                 responses: {
                     200: {
-                        description: 'Cliente excluído com sucesso'
+                        description: 'Cliente excluido com sucesso'
                     },
 
                     404: {
-                        description: 'Cliente não encontrado'
+                        description: 'Cliente nao encontrado'
                     },
 
                     500: {

@@ -1,15 +1,14 @@
 const pecaSwagger = {
     paths: {
 
-        // LISTAR PEÇAS
         '/pecas': {
             get: {
-                tags: ['Peças'],
-                summary: 'Lista todas as peças',
+                tags: ['Pecas'],
+                summary: 'Lista todas as pecas',
 
                 responses: {
                     200: {
-                        description: 'Lista de peças retornada com sucesso'
+                        description: 'Lista de pecas retornada com sucesso'
                     },
 
                     500: {
@@ -18,10 +17,9 @@ const pecaSwagger = {
                 }
             },
 
-            // INSERIR PEÇA
             post: {
-                tags: ['Peças'],
-                summary: 'Cadastra uma nova peça',
+                tags: ['Pecas'],
+                summary: 'Cadastra uma nova peca',
 
                 requestBody: {
                     required: true,
@@ -39,7 +37,7 @@ const pecaSwagger = {
 
                                     descricao: {
                                         type: 'string',
-                                        example: 'Compressor para geladeira doméstica'
+                                        example: 'Compressor para geladeira domestica'
                                     },
 
                                     preco_custo: {
@@ -82,11 +80,11 @@ const pecaSwagger = {
 
                 responses: {
                     201: {
-                        description: 'Peça cadastrada com sucesso'
+                        description: 'Peca cadastrada com sucesso'
                     },
 
                     400: {
-                        description: 'Dados inválidos'
+                        description: 'Dados invalidos'
                     },
 
                     500: {
@@ -96,12 +94,11 @@ const pecaSwagger = {
             }
         },
 
-        // BUSCAR PEÇA POR ID
         '/pecas/{id}': {
 
             get: {
-                tags: ['Peças'],
-                summary: 'Busca uma peça pelo ID',
+                tags: ['Pecas'],
+                summary: 'Busca uma peca pelo ID',
 
                 parameters: [
                     {
@@ -113,17 +110,17 @@ const pecaSwagger = {
                             type: 'integer'
                         },
 
-                        description: 'ID da peça'
+                        description: 'ID da peca'
                     }
                 ],
 
                 responses: {
                     200: {
-                        description: 'Peça encontrada'
+                        description: 'Peca encontrada'
                     },
 
                     404: {
-                        description: 'Peça não encontrada'
+                        description: 'Peca nao encontrada'
                     },
 
                     500: {
@@ -132,10 +129,9 @@ const pecaSwagger = {
                 }
             },
 
-            // ALTERAR PEÇA
             put: {
-                tags: ['Peças'],
-                summary: 'Altera uma peça',
+                tags: ['Pecas'],
+                summary: 'Altera uma peca',
 
                 parameters: [
                     {
@@ -147,7 +143,7 @@ const pecaSwagger = {
                             type: 'integer'
                         },
 
-                        description: 'ID da peça'
+                        description: 'ID da peca'
                     }
                 ],
 
@@ -167,7 +163,7 @@ const pecaSwagger = {
 
                                     descricao: {
                                         type: 'string',
-                                        example: 'Compressor para geladeira doméstica'
+                                        example: 'Compressor para geladeira domestica'
                                     },
 
                                     preco_custo: {
@@ -210,11 +206,11 @@ const pecaSwagger = {
 
                 responses: {
                     200: {
-                        description: 'Peça alterada com sucesso'
+                        description: 'Peca alterada com sucesso'
                     },
 
                     404: {
-                        description: 'Peça não encontrada'
+                        description: 'Peca nao encontrada'
                     },
 
                     500: {
@@ -223,10 +219,9 @@ const pecaSwagger = {
                 }
             },
 
-            // EXCLUIR PEÇA
             delete: {
-                tags: ['Peças'],
-                summary: 'Exclui uma peça',
+                tags: ['Pecas'],
+                summary: 'Exclui uma peca',
 
                 parameters: [
                     {
@@ -238,17 +233,17 @@ const pecaSwagger = {
                             type: 'integer'
                         },
 
-                        description: 'ID da peça'
+                        description: 'ID da peca'
                     }
                 ],
 
                 responses: {
                     200: {
-                        description: 'Peça excluída com sucesso'
+                        description: 'Peca excluida com sucesso'
                     },
 
                     404: {
-                        description: 'Peça não encontrada'
+                        description: 'Peca nao encontrada'
                     },
 
                     500: {
