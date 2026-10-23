@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const controller = require('../controllers/clienteController');
 
+router.post('/clientes/cadastro', controller.cadastrarComUsuario);
 router.get('/clientes', controller.index);
 router.get('/clientes/:id', controller.show);
 router.post('/clientes', controller.store);

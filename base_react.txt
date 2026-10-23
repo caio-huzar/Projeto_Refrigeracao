@@ -1,0 +1,315 @@
+Antes de começar: o front-end e o back-end são aplicações separadas. Cada um possui seu próprio package.json, suas dependências e seu servidor de desenvolvimento.
+
+Vamos trabalhar com uma pasta principal que contém o front-end e o back-end, porém, separadas:
+sistema-aula
+     ->Back
+     ->Front
+
+Abra o terminal na pasta que contém o projeto (sistema-aula)
+Após, execute:
+
+npm create vite@latest Front
+
+O Vite apresentará algumas perguntas, escolha:
+Framework: React
+Variante: Javascript
+RollDown: ESLint
+
+Ao final, o Vite criará a pasta Front e o terminal deverá estar trabalhando dentro dessa pasta. Se não, execute cd/Front
+Execute o comando:
+npm install
+
+OBS: a pasta node_modules não deverá ser enviada para o GitHub
+
+Dicas:
+Para iniciar o servidor: npm run dev
+Para parar o servidor: Ctrl+c
+
+O servidor pode ser acessado em http://localhost:5173/
+Resultado esperado: página inicial criada pelo Vite
+
+O Vite cria alguns arquivos de exemplo para demonstrar que o projeto funcionando. Porém, como vamos construir nossa própria aplicação, podemos fazer uma limpeza inicial.
+Remova os arquivos das pastas:
+src/assets
+public/
+
+Remova o arquivo de css (App.css, na pasta src), para que possa iniciar sua própria estilização.
+
+Arquivos que NÃO devem ser removidos:
+main.jsx
+index.html
+package.json
+package-lock.json
+vite.config.js
+eslint.config.js
+
+Substitua o conteúdo do App.jsx por:
+
+
+function App() {
+    return (
+        <h1>Meu sistema de teste</h1>
+    );
+}
+
+export default App;
+
+Alterando o index.css por configurações básicas:
+* {
+margin: 0;
+padding: 0;
+box-sizing: border-box;
+}
+
+body {
+font-family: Arial, sans-serif;
+}
+
+Agora é possível preparar as pastas que serão utilizadas durante o desenvolvimento. Dentro de src/ crie:
+components
+pages
+services
+
+Intenção dessas pastas:
+
+Componentes reutilizáveis da interface, como:
+Menu.jsx 
+Tabela.jsx 
+Formulario.jsx 
+Botao.jsx
+
+
+Telas do sistema, como:
+Home.jsx 
+Pessoas.jsx 
+Cargos.jsx
+
+
+Comunicação com o Back-end, como:
+pessoaService.js 
+cargoService.js
+
+O Git deve ser inicializado na pasta que contém Front e Back, e não dentro de Front ou Back
+É na pasta inicial do sistema, que deve-se executar o comando:
+git init
+
+Na , crie um arquivo chamado .gitignore
+
+A estrutura de arquivos deverá ficar:
+meu-sistema
+     -> .gitignore
+     -> Back/
+     -> Front/
+
+Conteúdo recomendado para .gitignore:
+
+# Dependências Node
+node_modules/
+
+# Variáveis de ambiente
+.env
+.env.local
+.env.*.local
+
+# Build
+dist/
+build/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+
+# Arquivos do sistema operacional
+.DS_Store
+Thumbs.db
+
+# IDE / editores
+.vscode/
+.idea/
+
+# Arquivos temporários
+*.tmp
+*.temp
+
+O package.json e o package-lock.json são enviados
+Depois, qualquer integrante do grupo consegue reconstruir as dependências usando:
+npm install
+
+Após inicializar o git (git init) e realizar alterações, poderá executar git status para verificar o que está sendo enviado
+O importante é que
+
+Como o repositório já existe no GitHub, será preciso reordenar os arquivos do backend que já estão lá. Para isso, deverá ser criado uma pasta chamada Back e colocar os arquivos que hoje estão na raiz, dentro dela.  
+Depois, cria uma pasta Front, no mesmo nível
+A estrutura será:
+
+.gitignore
+README.md
+Back/
+Front/
+
+Importante:
+
+Faça a mudança , usando o Git, e depois envie as alterações para o GitHub. Assim o histórico do projeto continua sendo preservado.
+
+Caso você não tenha os arquivos em sua máquina, faça um clone do projeto
+git clone URL_DO_SEU_REPOSITORIO
+
+Reorganize a estrutura de pastas e suba para o repositório novamente.
+
+A intenção aqui é compartilhar uma sugestão de organização das folhas de estilo do projeto, baseado em princípios de organização e responsabilidades de código.
+Ao trabalhar com componentes, o ideal também é que cada componente cuide da sua própria estrutura e, quando fizer sentido, da sua própria estilização.
+
+Evite colocar todo o CSS em um único index.css, porque conforme o projeto crescer ficará difícil saber qual estilo pertence a qual componente.
+
+└── src/
+    ├── components/
+    │   ├── Header/
+    │   │   ├── Header.jsx
+    │   │   └── Header.css
+    │   │
+    │   ├── Footer/
+    │   │   ├── Footer.jsx
+    │   │   └── Footer.css
+    │   │
+    │   └── Botao/
+    │       ├── Botao.jsx
+    │       └── Botao.css
+    │
+    ├── pages/
+    │   └── Home/
+    │       ├── Home.jsx
+    │       └── Home.css
+    │
+    ├── services/
+    │
+    ├── App.jsx
+    ├── index.css
+    └── main.jsx
+
+Essa organização é interessante, pois cada pasta representa uma unidade da aplicação.
+Qual a responsabilidade de cada CSS?
+index.css
+Responsável por estilos globais.
+Por exemplo:
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+}
+
+Aqui entram coisas que devem afetar a aplicação inteira, por exemplo:
+- fonte padrão;
+- reset;
+- box-sizing;
+- cor de fundo geral;
+- estilos globais do body;
+- variáveis CSS globais.
+Evitar colocar aqui:
+.botao-cadastrar {
+    ...
+}
+
+Pois esse estilo pertence ao componente Botao.
+
+Exemplo:
+Crie o arquivo Botao.css
+
+.botao {
+    background-color: #333;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.botao:hover {
+    opacity: 0.8;
+}
+Para realizar a importação e utilização da classe Botao, o arquivo Botao.jsx ficará:
+import './Botao.css';
+
+function Botao(props) {
+    return (
+        <button className='botao'>
+            {props.texto}
+        </button>
+    );
+}
+
+export default Botao;
+
+
+Perceba a responsabilidade:
+Botao.jsx
+   ↓
+estrutura/comportamento do componente
+
+Botao.css
+   ↓
+aparência do componente
+
+
+Colocar JSX e CSS na mesma pasta facilita muito a manutenção. Imagine daqui a alguns meses você precisar alterar algo no componente botão.
+Você sabe imediatamente onde procurar:
+Botao/
+├── Botao.jsx
+└── Botao.css
+
+Se tudo estivesse assim ficaria muito mais difícil descobrir onde está cada regra:
+src/
+├── App.jsx
+├── index.css
+├── componentes.css
+├── paginas.css
+├── botoes.css
+├── header.css
+├── formularios.css
+└── estilos.css
+
+Portanto, se o estilo pertence a um componente específico, coloque o CSS junto do componente.
+Se o estilo é utilizado pela aplicação inteira, coloque no index.css.
+
+Após realizar a ordenação dos componentes e CSS em suas devidas pastas, lembre-se de ajustar o caminho na importação dos outros arquivos onde ele é utilizado.
+Comentários da turmanpm install react-router-dom
+
+Essa biblioteca permite criar rotas e navegar entre componentes React sem recarregar a página inteira.
+
+Dentro de Front/src/pages, crie mais alguns arquivos para iniciar (Pessoas, Cargos, além da Home)
+
+No Header.jsx, insira logo no início:
+import { Link } from 'react-router-dom';
+
+E, dentro do elemento <header>
+ <nav>
+                <Link to="/">Início</Link>
+                {' | '}
+                <Link to="/pessoas">Pessoas</Link>
+                {' | '}
+                <Link to="/cargos">Cargos</Link>
+            </nav>
+
+No App.jsx, insira logo no início:
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+
+E, substitua o return existente por:
+return (
+        <BrowserRouter>
+            <Header />
+
+            <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/pessoas" element={<Pessoas />} />
+                <Route path="/cargos" element={<Cargos />} />
+            </Routes>
+
+            <Footer />
+        </BrowserRouter>
+    );

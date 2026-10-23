@@ -3,6 +3,56 @@ const { type } = require("express/lib/response");
 const clienteSwagger = {
     paths: {
 
+        '/clientes/cadastro': {
+            post: {
+                tags: ['Clientes'],
+                summary: 'Cria o login e os dados do cliente em uma operacao',
+                description: 'A senha e armazenada como hash. Se a criacao do cliente falhar, o usuario tambem nao sera salvo.',
+                requestBody: {
+                    required: true,
+                    content: {
+                        'application/json': {
+                            schema: {
+                                type: 'object',
+                                required: ['usuario', 'cliente'],
+                                properties: {
+                                    usuario: {
+                                        type: 'object',
+                                        required: ['email', 'senha'],
+                                        properties: {
+                                            email: { type: 'string', format: 'email', example: 'cliente@email.com' },
+                                            senha: { type: 'string', format: 'password', minLength: 8, example: 'SenhaSegura123' }
+                                        }
+                                    },
+                                    cliente: {
+                                        type: 'object',
+                                        required: ['nome', 'telefone', 'cpf_cnpj', 'rua', 'numero_casa', 'bairro', 'cep', 'cidade', 'estado'],
+                                        properties: {
+                                            nome: { type: 'string', example: 'Maria da Silva' },
+                                            telefone: { type: 'string', example: '42999999999' },
+                                            cpf_cnpj: { type: 'string', example: '12345678901' },
+                                            rua: { type: 'string', example: 'Rua das Flores' },
+                                            numero_casa: { type: 'integer', example: 123 },
+                                            bairro: { type: 'string', example: 'Centro' },
+                                            cep: { type: 'string', example: '84600000' },
+                                            cidade: { type: 'string', example: 'Uniao da Vitoria' },
+                                            estado: { type: 'string', example: 'Parana' }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                responses: {
+                    201: { description: 'Login e cadastro de cliente criados; a senha nao e retornada' },
+                    400: { description: 'Dados ausentes ou invalidos' },
+                    409: { description: 'Email, telefone ou CPF/CNPJ ja cadastrado' },
+                    500: { description: 'Erro interno do servidor' }
+                }
+            }
+        },
+
         '/clientes': {
             get: {
                 tags: ['Clientes'],
