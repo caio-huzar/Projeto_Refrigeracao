@@ -15,6 +15,7 @@ const servicoRoute = require('./routes/servicoRoute');
 const osRoutes = require('./routes/osRoutes');
 const agendamentoRoutes = require('./routes/agendamentoRoutes');
 const horarioDisponivelRoutes = require('./routes/horarioDisponivelRoutes');
+const orcamentoRoutes = require('./routes/orcamentoRoutes');
 
 const app = express();
 
@@ -34,6 +35,7 @@ app.use(servicoRoute);
 app.use('/os', osRoutes);
 app.use('/agendamentos', agendamentoRoutes);
 app.use('/horarios', horarioDisponivelRoutes);
+app.use('/orcamentos', orcamentoRoutes);
 
 const PORT = process.env.PORT || 3000;
 

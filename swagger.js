@@ -6,6 +6,7 @@ const tecnicoSwagger = require('./swagger/tecnicoSwagger');
 const userSwagger = require('./swagger/userSwagger');
 const horarioSwagger = require('./swagger/horarioSwagger');
 const agendamentoSwagger = require('./swagger/agendamentoSwagger');
+const orcamentoSwagger = require('./swagger/orcamentoSwagger');
 
 const swaggerSpec = {
     openapi: '3.0.0',
@@ -30,7 +31,8 @@ const swaggerSpec = {
         ...tecnicoSwagger.paths,
         ...userSwagger.paths,
         ...horarioSwagger.paths,
-        ...agendamentoSwagger.paths
+        ...agendamentoSwagger.paths,
+        ...orcamentoSwagger.paths
     }
 };
 
