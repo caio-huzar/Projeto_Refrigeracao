@@ -1,0 +1,152 @@
+.request-panel {
+  width: min(100%, 880px);
+  margin: 0 auto;
+  padding: 34px 38px 30px;
+  border: 1px solid #e4edf4;
+  border-radius: 20px;
+  background: var(--white);
+  box-shadow: 0 2px 4px rgb(24 65 101 / 4%);
+  animation: panel-enter 380ms ease-out both;
+}
+
+.request-panel__eyebrow {
+  margin: 0 0 7px;
+  color: var(--blue);
+  font-size: 11px;
+  font-weight: 750;
+  letter-spacing: 1.15px;
+}
+
+.request-panel__heading h1 {
+  margin: 0;
+  color: #172f48;
+  font-size: 25px;
+  line-height: 1.25;
+}
+
+.request-panel__heading > p:last-child {
+  margin: 7px 0 0;
+  color: #617b92;
+  font-size: 14px;
+}
+
+.request-form {
+  margin-top: 29px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 20px;
+  row-gap: 20px;
+}
+
+.request-field {
+  min-width: 0;
+  display: grid;
+  align-content: start;
+  gap: 8px;
+  color: #213c56;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.request-field b {
+  color: #1888bd;
+  font-weight: 700;
+}
+
+.request-field--wide {
+  grid-column: 1 / -1;
+}
+
+.request-field input,
+.request-field select,
+.request-field textarea {
+  width: 100%;
+  min-width: 0;
+  border: 1px solid #d7e3ed;
+  border-radius: 12px;
+  color: #193550;
+  background: #fff;
+  font-size: 15px;
+  font-weight: 400;
+}
+
+.request-field input,
+.request-field select {
+  height: 50px;
+  padding: 0 15px;
+}
+
+.request-field textarea {
+  min-height: 108px;
+  padding: 13px 15px;
+  resize: vertical;
+  line-height: 1.5;
+}
+
+.request-field input::placeholder,
+.request-field textarea::placeholder {
+  color: #879caf;
+}
+
+.request-field select:invalid {
+  color: #687f94;
+}
+
+.request-notice {
+  grid-column: 1 / -1;
+  margin: -4px 0 -5px;
+  padding: 11px 13px;
+  border-left: 3px solid #e3a44f;
+  border-radius: 4px;
+  color: #76511e;
+  background: #fff8e9;
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.request-notice--status {
+  border-left-color: #3b9b70;
+  color: #236849;
+  background: #edf9f2;
+}
+
+.request-submit {
+  grid-column: 1 / -1;
+  min-height: 54px;
+  gap: 9px;
+  background: #0789c5;
+  box-shadow: none;
+  font-size: 15px;
+}
+
+.request-submit:hover {
+  background: #0875a8;
+}
+
+.request-submit:disabled {
+  cursor: wait;
+  opacity: 0.7;
+}
+
+@media (max-width: 640px) {
+  .request-panel {
+    padding: 26px 20px 22px;
+    border-radius: 16px;
+  }
+
+  .request-panel__heading h1 {
+    font-size: 21px;
+  }
+
+  .request-form {
+    margin-top: 24px;
+    grid-template-columns: 1fr;
+    row-gap: 17px;
+  }
+
+  .request-field--wide,
+  .request-notice,
+  .request-submit {
+    grid-column: 1;
+  }
+}

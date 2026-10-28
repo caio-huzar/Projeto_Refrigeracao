@@ -3,6 +3,7 @@ const sequelize = require('../config/database');
 const Agendamento = require('../models/AgendamentoModel');
 const Horario = require('../models/HorarioDisponivelModel');
 const Tecnico = require('../models/tecnicoModel');
+const { aplicarFiltroCliente } = require('../utils/escopoCliente');
 
 function parseDate(value) {
   const date = new Date(value);
@@ -12,7 +13,8 @@ function parseDate(value) {
 module.exports = {
   async criar(req, res) {
     try {
-      const { id_cliente, id_tecnico, data_hora, observacao = null } = req.body;
+      let { id_cliente, id_tecnico, data_hora, observacao = null } = req.body;
+      if (req.usuario.cargo === 'cliente') id_cliente = req.usuario.id_cliente;
       const data = parseDate(data_hora);
       if (!id_cliente || !id_tecnico || !data) {
         return res.status(400).json({ mensagem: 'Informe id_cliente, id_tecnico e uma data_hora valida.' });
@@ -85,7 +87,7 @@ module.exports = {
       if (req.query.id_cliente) where.id_cliente = req.query.id_cliente;
       if (req.query.id_tecnico) where.id_tecnico = req.query.id_tecnico;
       if (req.query.status) where.status = req.query.status;
-      const dados = await Agendamento.findAll({ where, order: [['data_hora', 'ASC']] });
+      const dados = await Agendamento.findAll({ where: aplicarFiltroCliente(req, where), order: [['data_hora', 'ASC']] });
       return res.json(dados);
     } catch (error) {
       return res.status(500).json({ mensagem: 'Erro ao listar agendamentos.', detalhe: error.message });

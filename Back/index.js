@@ -7,6 +7,7 @@ const swaggerUi = require('swagger-ui-express');
 const sequelize = require('./config/database');
 const swaggerSpec = require('./swagger');
 
+const authRoutes = require('./routes/authRoutes');
 const userRoute = require('./routes/userRoute');
 const clienteRoute = require('./routes/clienteRoute');
 const tecnicoRoute = require('./routes/tecnicoRoute');
@@ -24,6 +25,7 @@ app.use(express.json());
 
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
+app.use(authRoutes);
 // Rotas que já definem o caminho completo dentro do arquivo
 app.use(userRoute);
 app.use(clienteRoute);

@@ -2,6 +2,7 @@ const sequelize = require('../config/database');
 const OS = require('../models/OSModel');
 const Peca = require('../models/pecaModel');
 const OsPeca = require('../models/OsPecaModel');
+const { pertenceAoCliente } = require('../utils/escopoCliente');
 
 module.exports = {
   async registrar(req, res) {
@@ -60,7 +61,9 @@ module.exports = {
   async listar(req, res) {
     try {
       const os = await OS.findByPk(req.params.id);
-      if (!os) return res.status(404).json({ mensagem: 'Ordem de servico nao encontrada.' });
+      if (!os || !pertenceAoCliente(req, os.id_cliente)) {
+        return res.status(404).json({ mensagem: 'Ordem de servico nao encontrada.' });
+      }
       const itens = await OsPeca.findAll({ where: { id_os: os.id }, include: [{ model: Peca, attributes: ['id', 'nome', 'preco_venda'] }] });
       return res.json(itens);
     } catch (error) {

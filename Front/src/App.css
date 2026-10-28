@@ -161,6 +161,37 @@
   }
 }
 
+.portal-shell {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.portal-main {
+  width: min(calc(100% - 40px), 1040px);
+  margin: 40px auto 48px;
+  flex: 1;
+}
+
+.portal-footer {
+  padding: 0 20px 24px;
+  color: var(--muted);
+  text-align: center;
+  font-size: 14px;
+}
+
+.portal-footer span {
+  padding: 0 5px;
+  color: #8bb9d7;
+}
+
+@media (max-width: 640px) {
+  .portal-main {
+    width: calc(100% - 28px);
+    margin: 24px auto 32px;
+  }
+}
+
 .ticks {
   position: relative;
   width: 100%;

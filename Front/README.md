@@ -1,16 +1,9 @@
-# React + Vite
+# Portal do cliente
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Executar localmente
 
-Currently, two official plugins are available:
+Instale as dependências (`npm install`) e inicie a API Node na pasta `Back`. A API usa `http://localhost:3000` por padrão; para outra URL, defina `VITE_API_URL` no ambiente do Vite antes de iniciar o front.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+Na pasta `Front`, execute `npm run dev`. Crie uma conta em `/cadastro` ou entre com o e-mail e a senha de uma conta de cliente. O token de autenticação fica armazenado somente na sessão atual do navegador.
 
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+As solicitações de atendimento usam o cliente vinculado ao token e carregam serviços, técnicos ativos e horários disponíveis da API.

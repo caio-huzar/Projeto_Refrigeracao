@@ -1,0 +1,34 @@
+.account-details {
+  margin: 28px 0 0;
+  padding: 26px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+  border: 1px solid #e1ebf2;
+  border-radius: 14px;
+  background: #fff;
+}
+
+.account-details div {
+  min-width: 0;
+}
+
+.account-details dt {
+  color: #617b92;
+  font-size: 13px;
+}
+
+.account-details dd {
+  margin: 5px 0 0;
+  color: #193550;
+  font-weight: 650;
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 640px) {
+  .account-details {
+    padding: 20px;
+    grid-template-columns: 1fr;
+    gap: 17px;
+  }
+}

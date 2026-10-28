@@ -78,7 +78,8 @@ module.exports = {
 
   async index(req, res) {
     try {
-      const data = await Cliente.findAll({ include: { model: User, attributes: ['email', 'cargo', 'esta_ativo'] } });
+      const where = req.usuario.cargo === 'cliente' ? { id: req.usuario.id_cliente } : {};
+      const data = await Cliente.findAll({ where, include: { model: User, attributes: ['email', 'cargo', 'esta_ativo'] } });
       return res.json(data);
     } catch (error) {
       return res.status(500).json({ error: 'Erro ao buscar clientes', details: error.message });
@@ -88,6 +89,9 @@ module.exports = {
   async show(req, res) {
     try {
       const { id } = req.params;
+      if (req.usuario.cargo === 'cliente' && Number(id) !== Number(req.usuario.id_cliente)) {
+        return res.status(404).json({ error: 'Cliente nao encontrado' });
+      }
       const data = await Cliente.findByPk(id, { include: { model: User, attributes: ['email', 'cargo', 'esta_ativo'] } });
       if (!data) return res.status(404).json({ error: 'Cliente nao encontrado' });
       return res.json(data);

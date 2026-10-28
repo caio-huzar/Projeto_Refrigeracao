@@ -1,0 +1,261 @@
+.portal-section {
+  padding: 15px 4px;
+  animation: panel-enter 380ms ease-out both;
+}
+
+.portal-section__eyebrow {
+  margin: 0 0 8px;
+  color: var(--blue);
+  font-size: 11px;
+  font-weight: 750;
+  letter-spacing: 1.15px;
+}
+
+.portal-section h1 {
+  margin: 0;
+  color: #172f48;
+  font-size: 28px;
+  line-height: 1.25;
+}
+
+.portal-section__description {
+  margin: 8px 0 0;
+  color: #617b92;
+  font-size: 15px;
+}
+
+.portal-empty {
+  min-height: 260px;
+  margin-top: 28px;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 1px dashed #c7ddeb;
+  border-radius: 14px;
+  color: #5e7b95;
+  background: rgb(255 255 255 / 74%);
+  text-align: center;
+}
+
+.portal-empty__icon {
+  width: 48px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+  border-radius: 14px;
+  color: #1684b7;
+  background: #e4f4fc;
+}
+
+.portal-empty p {
+  max-width: 440px;
+  margin: 15px 0 18px;
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.portal-section__action {
+  min-height: 42px;
+  padding: 0 17px;
+  display: inline-flex;
+  align-items: center;
+  border-radius: 9px;
+  color: #fff;
+  background: #0789c5;
+  font-size: 14px;
+  font-weight: 650;
+  text-decoration: none;
+}
+
+.portal-section__action:hover {
+  background: #0875a8;
+}
+
+.portal-feedback {
+  margin: 24px 0 0;
+  padding: 13px 15px;
+  border-radius: 10px;
+  color: #42637f;
+  background: #fff;
+}
+
+.portal-feedback--error {
+  color: #8a3c35;
+  background: #fff0ee;
+}
+
+.portal-record-list {
+  margin-top: 26px;
+  display: grid;
+  gap: 16px;
+}
+
+.portal-record {
+  padding: 22px;
+  border: 1px solid #e1ebf2;
+  border-radius: 14px;
+  background: #fff;
+  box-shadow: 0 2px 4px rgb(24 65 101 / 3%);
+}
+
+.portal-record__top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.portal-record h2 {
+  margin: 0;
+  color: #193550;
+  font-size: 17px;
+}
+
+.portal-record__top p {
+  margin: 5px 0 0;
+  color: #617b92;
+  font-size: 14px;
+}
+
+.portal-status {
+  flex: 0 0 auto;
+  padding: 5px 10px;
+  border-radius: 999px;
+  color: #42637f;
+  background: #edf3f7;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.portal-status--pendente,
+.portal-status--aberta,
+.portal-status--enviado {
+  color: #875b14;
+  background: #fff4d9;
+}
+
+.portal-status--confirmado,
+.portal-status--agendada,
+.portal-status--aprovado,
+.portal-status--concluida {
+  color: #236849;
+  background: #e8f7ef;
+}
+
+.portal-status--cancelado,
+.portal-status--recusado {
+  color: #8a3c35;
+  background: #fff0ee;
+}
+
+.portal-record__details {
+  margin: 20px 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px 38px;
+}
+
+.portal-record__details div {
+  min-width: 110px;
+}
+
+.portal-record__details dt {
+  color: #617b92;
+  font-size: 12px;
+}
+
+.portal-record__details dd {
+  margin: 5px 0 0;
+  color: #193550;
+  font-size: 14px;
+  font-weight: 650;
+}
+
+.portal-record__description {
+  margin: 17px 0 0;
+  color: #45627b;
+  font-size: 14px;
+  line-height: 1.5;
+  white-space: pre-wrap;
+}
+
+.portal-record__action {
+  margin-top: 16px;
+  padding: 0;
+  border: 0;
+  color: #087eb8;
+  background: transparent;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.portal-record__action:disabled {
+  cursor: wait;
+  opacity: 0.65;
+}
+
+.portal-record__extra {
+  margin-top: 15px;
+  padding: 14px;
+  border-radius: 9px;
+  color: #45627b;
+  background: #f3f8fc;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.portal-record__extra p {
+  margin: 0;
+}
+
+.portal-record__extra p + p {
+  margin-top: 8px;
+}
+
+.portal-record__extra ul {
+  margin: 8px 0 0;
+  padding-left: 20px;
+}
+
+.portal-record__actions {
+  margin-top: 17px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.portal-record__actions button {
+  min-height: 38px;
+  padding: 0 13px;
+  border: 1px solid #cfe0eb;
+  border-radius: 8px;
+  color: #087eb8;
+  background: #fff;
+  font-weight: 650;
+  cursor: pointer;
+}
+
+.portal-record__actions button:first-child {
+  border-color: #0789c5;
+  color: #fff;
+  background: #0789c5;
+}
+
+.portal-record__actions button:disabled {
+  cursor: wait;
+  opacity: 0.65;
+}
+
+@media (max-width: 560px) {
+  .portal-record {
+    padding: 18px;
+  }
+
+  .portal-record__top {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

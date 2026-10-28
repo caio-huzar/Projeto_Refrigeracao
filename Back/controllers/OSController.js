@@ -4,6 +4,7 @@ const OsPeca = require('../models/OsPecaModel');
 const Servico = require('../models/servicoModel');
 const Cliente = require('../models/clienteModel');
 const Tecnico = require('../models/tecnicoModel');
+const { aplicarFiltroCliente, pertenceAoCliente } = require('../utils/escopoCliente');
 
 const statusValidos = ['aberta', 'agendada', 'em_andamento', 'concluida', 'cancelada'];
 const statusFinais = ['concluida', 'cancelada'];
@@ -74,7 +75,7 @@ module.exports = {
       if (req.query.id_cliente) where.id_cliente = req.query.id_cliente;
       if (req.query.id_tecnico) where.id_tecnico = req.query.id_tecnico;
 
-      const ordens = await OS.findAll({ where, include: includes, order: [['aberta_em', 'DESC']] });
+      const ordens = await OS.findAll({ where: aplicarFiltroCliente(req, where), include: includes, order: [['aberta_em', 'DESC']] });
       const pecasPorOs = await somarPecas(ordens.map((o) => o.id));
 
       const resultado = ordens.map((item) => {
@@ -90,7 +91,9 @@ module.exports = {
   async buscar(req, res) {
     try {
       const item = await OS.findByPk(req.params.id, { include: includes });
-      if (!item) return res.status(404).json({ mensagem: 'Ordem de servico nao encontrada.' });
+      if (!item || !pertenceAoCliente(req, item.id_cliente)) {
+        return res.status(404).json({ mensagem: 'Ordem de servico nao encontrada.' });
+      }
 
       const os = item.toJSON();
       const pecasPorOs = await somarPecas([os.id]);
@@ -148,7 +151,9 @@ module.exports = {
   async calcularTotal(req, res) {
     try {
       const item = await OS.findByPk(req.params.id, { include: [{ model: Servico, required: false }] });
-      if (!item) return res.status(404).json({ mensagem: 'Ordem de servico nao encontrada.' });
+      if (!item || !pertenceAoCliente(req, item.id_cliente)) {
+        return res.status(404).json({ mensagem: 'Ordem de servico nao encontrada.' });
+      }
 
       const pecasPorOs = await somarPecas([item.id]);
       return res.json({ id_os: item.id, ...montarResumo(item, pecasPorOs[item.id] || 0) });

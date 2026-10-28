@@ -1,10 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const controller = require('../controllers/agendamentoController');
+const { autenticarUsuario, exigirFuncionario } = require('../middleware/autenticarUsuario');
 
-router.get('/', controller.listar);
-router.post('/', controller.criar);
-router.patch('/:id/confirmar', controller.confirmar);
-router.patch('/:id/cancelar', controller.cancelar);
+router.get('/', autenticarUsuario, controller.listar);
+router.post('/', autenticarUsuario, controller.criar);
+router.patch('/:id/confirmar', autenticarUsuario, exigirFuncionario, controller.confirmar);
+router.patch('/:id/cancelar', autenticarUsuario, exigirFuncionario, controller.cancelar);
 
 module.exports = router;

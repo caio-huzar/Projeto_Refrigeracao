@@ -3,7 +3,7 @@ const User = require('../models/userModel');
 module.exports = {
   async index(req, res) {
     try {
-      const data = await User.findAll();
+      const data = await User.findAll({ attributes: { exclude: ['senha_hash'] } });
       return res.json(data);
     } catch (error) {
       return res.status(500).json({ error: 'Erro ao buscar usuarios', details: error.message });
@@ -13,7 +13,7 @@ module.exports = {
   async show(req, res) {
     try {
       const { id } = req.params;
-      const data = await User.findByPk(id);
+      const data = await User.findByPk(id, { attributes: { exclude: ['senha_hash'] } });
       if (!data) return res.status(404).json({ error: 'Usuario nao encontrado' });
       return res.json(data);
     } catch (error) {

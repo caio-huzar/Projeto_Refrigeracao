@@ -1,3 +1,4 @@
+const { Op } = require('sequelize');
 const Orcamento = require('../models/orcamentoModel');
 const OS = require('../models/OSModel');
 const OsPeca = require('../models/OsPecaModel');
@@ -57,17 +58,32 @@ module.exports = {
   async listar(req, res) {
     try {
       const where = {};
+      let filtroIdOs = null;
       if (req.query.id_os) {
         if (!validarId(req.query.id_os)) {
           return res.status(400).json({ mensagem: 'id_os invalido.' });
         }
-        where.id_os = Number(req.query.id_os);
+        filtroIdOs = Number(req.query.id_os);
       }
       if (req.query.status) {
         if (!statusValidos.includes(req.query.status)) {
           return res.status(400).json({ mensagem: 'Status de orcamento invalido.' });
         }
         where.status = req.query.status;
+      }
+
+      if (req.usuario.cargo === 'cliente') {
+        const ordens = await OS.findAll({
+          where: {
+            id_cliente: req.usuario.id_cliente,
+            ...(filtroIdOs ? { id: filtroIdOs } : {})
+          },
+          attributes: ['id'],
+          raw: true
+        });
+        where.id_os = { [Op.in]: ordens.map((ordem) => ordem.id) };
+      } else if (filtroIdOs) {
+        where.id_os = filtroIdOs;
       }
 
       const orcamentos = await Orcamento.findAll({
@@ -82,8 +98,13 @@ module.exports = {
 
   async buscar(req, res) {
     try {
+      const includeOS = { model: OS, as: 'os' };
+      if (req.usuario.cargo === 'cliente') {
+        includeOS.where = { id_cliente: req.usuario.id_cliente };
+        includeOS.required = true;
+      }
       const orcamento = await Orcamento.findByPk(req.params.id, {
-        include: [{ model: OS, as: 'os' }]
+        include: [includeOS]
       });
       if (!orcamento) return res.status(404).json({ mensagem: 'Orcamento nao encontrado.' });
       return res.json(orcamento);
@@ -99,8 +120,16 @@ module.exports = {
         return res.status(400).json({ mensagem: `Status invalido. Use: ${statusValidos.join(', ')}.` });
       }
 
-      const orcamento = await Orcamento.findByPk(req.params.id);
+      const includeOS = { model: OS, as: 'os' };
+      if (req.usuario.cargo === 'cliente') {
+        includeOS.where = { id_cliente: req.usuario.id_cliente };
+        includeOS.required = true;
+      }
+      const orcamento = await Orcamento.findByPk(req.params.id, { include: [includeOS] });
       if (!orcamento) return res.status(404).json({ mensagem: 'Orcamento nao encontrado.' });
+      if (req.usuario.cargo === 'cliente' && !['aprovado', 'recusado'].includes(status)) {
+        return res.status(403).json({ mensagem: 'Cliente pode apenas aprovar ou recusar um orcamento.' });
+      }
       if (!transicoes[orcamento.status].includes(status)) {
         return res.status(409).json({ mensagem: `Nao e permitido alterar de ${orcamento.status} para ${status}.` });
       }
