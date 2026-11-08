@@ -16,35 +16,90 @@ module.exports = {
       let { id_cliente, id_tecnico, data_hora, observacao = null } = req.body;
       if (req.usuario.cargo === 'cliente') id_cliente = req.usuario.id_cliente;
       const data = parseDate(data_hora);
-      if (!id_cliente || !id_tecnico || !data) {
-        return res.status(400).json({ mensagem: 'Informe id_cliente, id_tecnico e uma data_hora valida.' });
+      if (!id_cliente || !data) {
+        return res.status(400).json({ mensagem: 'Informe id_cliente e uma data_hora valida.' });
       }
       if (data <= new Date()) return res.status(400).json({ mensagem: 'O agendamento deve ser no futuro.' });
 
-      const tecnico = await Tecnico.findByPk(id_tecnico);
-      if (!tecnico || tecnico.esta_ativo === false) {
-        return res.status(400).json({ mensagem: 'Tecnico nao encontrado ou inativo.' });
+      if (!id_tecnico) {
+        const tecnicosAtivos = await Tecnico.findAll({ where: { esta_ativo: true } });
+        if (!tecnicosAtivos.length) {
+          return res.status(400).json({ mensagem: 'Nao ha tecnicos ativos cadastrados para realizar o atendimento.' });
+        }
+
+        const diaSemana = data.getDay();
+        const hora = data.toTimeString().slice(0, 8);
+
+        for (const tec of tecnicosAtivos) {
+          const regra = await Horario.findOne({
+            where: {
+              id_tecnico: tec.id,
+              dia_semana: diaSemana,
+              esta_ativo: true,
+              hora_inicio: { [Op.lte]: hora },
+              hora_fim: { [Op.gt]: hora }
+            }
+          });
+          if (regra) {
+            const conflito = await Agendamento.findOne({
+              where: {
+                id_tecnico: tec.id,
+                status: { [Op.in]: ['pendente', 'confirmado'] },
+                data_hora: { [Op.between]: [new Date(data.getTime() - 59 * 60000), new Date(data.getTime() + 59 * 60000)] }
+              }
+            });
+            if (!conflito) {
+              id_tecnico = tec.id;
+              break;
+            }
+          }
+        }
+
+        if (!id_tecnico) {
+          for (const tec of tecnicosAtivos) {
+            const conflito = await Agendamento.findOne({
+              where: {
+                id_tecnico: tec.id,
+                status: { [Op.in]: ['pendente', 'confirmado'] },
+                data_hora: { [Op.between]: [new Date(data.getTime() - 59 * 60000), new Date(data.getTime() + 59 * 60000)] }
+              }
+            });
+            if (!conflito) {
+              id_tecnico = tec.id;
+              break;
+            }
+          }
+        }
+
+        if (!id_tecnico) {
+          return res.status(409).json({ mensagem: 'Nao ha tecnicos disponiveis para esta data e horario. Por favor, escolha outro horario.' });
+        }
+      } else {
+        const tecnico = await Tecnico.findByPk(id_tecnico);
+        if (!tecnico || tecnico.esta_ativo === false) {
+          return res.status(400).json({ mensagem: 'Tecnico nao encontrado ou inativo.' });
+        }
+
+        const diaSemana = data.getDay();
+        const hora = data.toTimeString().slice(0, 8);
+        const regras = await Horario.findAll({
+          where: {
+            id_tecnico, dia_semana: diaSemana, esta_ativo: true,
+            hora_inicio: { [Op.lte]: hora },
+            hora_fim: { [Op.gt]: hora }
+          }
+        });
+        if (!regras.length) return res.status(409).json({ mensagem: 'O tecnico nao possui horario disponivel nesse dia e horario.' });
+
+        const conflito = await Agendamento.findOne({
+          where: {
+            id_tecnico,
+            status: { [Op.in]: ['pendente', 'confirmado'] },
+            data_hora: { [Op.between]: [new Date(data.getTime() - 59 * 60000), new Date(data.getTime() + 59 * 60000)] }
+          }
+        });
+        if (conflito) return res.status(409).json({ mensagem: 'Ja existe um agendamento proximo desse horario para o tecnico.' });
       }
-
-      const diaSemana = data.getDay();
-      const hora = data.toTimeString().slice(0, 8);
-      const regras = await Horario.findAll({
-        where: {
-          id_tecnico, dia_semana: diaSemana, esta_ativo: true,
-          hora_inicio: { [Op.lte]: hora },
-          hora_fim: { [Op.gt]: hora }
-        }
-      });
-      if (!regras.length) return res.status(409).json({ mensagem: 'O tecnico nao possui horario disponivel nesse dia e horario.' });
-
-      const conflito = await Agendamento.findOne({
-        where: {
-          id_tecnico,
-          status: { [Op.in]: ['pendente', 'confirmado'] },
-          data_hora: { [Op.between]: [new Date(data.getTime() - 59 * 60000), new Date(data.getTime() + 59 * 60000)] }
-        }
-      });
-      if (conflito) return res.status(409).json({ mensagem: 'Ja existe um agendamento proximo desse horario para o tecnico.' });
 
       const agendamento = await Agendamento.create({ id_cliente, id_tecnico, data_hora: data, observacao });
       return res.status(201).json(agendamento);
