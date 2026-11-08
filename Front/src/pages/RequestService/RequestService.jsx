@@ -1,48 +1,28 @@
 import { useEffect, useState } from 'react'
 import { Send } from 'lucide-react'
-import {
-  criarAgendamento,
-  listarHorariosDisponiveis,
-  listarTecnicos,
-} from '../../services/agendamentoService.js'
+import { criarAgendamento } from '../../services/agendamentoService.js'
 import { listarServicos } from '../../services/servicoService.js'
 import './RequestService.css'
 
-function gerarHorarios(horarios) {
-  const slots = new Set()
-
-  horarios.forEach(({ hora_inicio: inicio, hora_fim: fim, duracao_minutos: duracao }) => {
-    const [horaInicio, minutoInicio] = inicio.split(':').map(Number)
-    const [horaFim, minutoFim] = fim.split(':').map(Number)
-    if (!Number.isFinite(Number(duracao)) || Number(duracao) <= 0) {
-      throw new Error('O servidor retornou uma duração de horário inválida.')
-    }
-    const inicioMinutos = horaInicio * 60 + minutoInicio
-    const fimMinutos = horaFim * 60 + minutoFim
-
-    for (let minutos = inicioMinutos; minutos < fimMinutos; minutos += Number(duracao)) {
-      const hora = String(Math.floor(minutos / 60)).padStart(2, '0')
-      const minuto = String(minutos % 60).padStart(2, '0')
-      slots.add(`${hora}:${minuto}`)
-    }
-  })
-
-  return [...slots].sort()
-}
+const HORARIOS_DISPONIVEIS = [
+  '08:00', '08:30', '09:00', '09:30',
+  '10:00', '10:30', '11:00', '11:30',
+  '12:00', '12:30', '13:00', '13:30',
+  '14:00', '14:30', '15:00', '15:30',
+  '16:00', '16:30', '17:00', '17:30',
+  '18:00'
+]
 
 function RequestService() {
   const [services, setServices] = useState([])
-  const [technicians, setTechnicians] = useState([])
-  const [technicianId, setTechnicianId] = useState('')
   const [date, setDate] = useState('')
-  const [timeSlots, setTimeSlots] = useState([])
+  const [selectedTime, setSelectedTime] = useState('')
   const [isLoadingCatalog, setIsLoadingCatalog] = useState(true)
-  const [isLoadingSlots, setIsLoadingSlots] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [catalogError, setCatalogError] = useState('')
-  const [scheduleError, setScheduleError] = useState('')
   const [notice, setNotice] = useState('')
   const [noticeType, setNoticeType] = useState('status')
+
   const today = new Date()
   const minDate = new Date(today.getTime() - today.getTimezoneOffset() * 60000)
     .toISOString()
@@ -51,11 +31,10 @@ function RequestService() {
   useEffect(() => {
     let active = true
 
-    Promise.all([listarServicos(), listarTecnicos()])
-      .then(([serviceData, technicianData]) => {
+    listarServicos()
+      .then((serviceData) => {
         if (!active) return
         setServices(serviceData)
-        setTechnicians(technicianData.filter((technician) => technician.esta_ativo !== false))
       })
       .catch((error) => {
         if (active) setCatalogError(error.message)
@@ -67,41 +46,12 @@ function RequestService() {
     return () => { active = false }
   }, [])
 
-  useEffect(() => {
-    let active = true
-
-    if (!technicianId || !date) return () => { active = false }
-
-    const selectedDate = new Date(`${date}T00:00:00`)
-
-    listarHorariosDisponiveis(technicianId, selectedDate.getDay())
-      .then((horarios) => {
-        if (active) setTimeSlots(gerarHorarios(horarios))
-      })
-      .catch((error) => {
-        if (active) setScheduleError(error.message)
-      })
-      .finally(() => {
-        if (active) setIsLoadingSlots(false)
-      })
-
-    return () => { active = false }
-  }, [technicianId, date])
-
-  function handleTechnicianChange(event) {
-    const selectedTechnician = event.target.value
-    setTechnicianId(selectedTechnician)
-    setTimeSlots([])
-    setScheduleError('')
-    setIsLoadingSlots(Boolean(selectedTechnician && date))
+  function handleDateChange(event) {
+    setDate(event.target.value)
   }
 
-  function handleDateChange(event) {
-    const selectedDate = event.target.value
-    setDate(selectedDate)
-    setTimeSlots([])
-    setScheduleError('')
-    setIsLoadingSlots(Boolean(selectedDate && technicianId))
+  function handleTimeChange(event) {
+    setSelectedTime(event.target.value)
   }
 
   async function handleSubmit(event) {
@@ -118,16 +68,14 @@ function RequestService() {
 
     try {
       await criarAgendamento({
-        id_tecnico: Number(technicianId),
         data_hora: dataHora.toISOString(),
         observacao: `Serviço: ${serviceName}\nDescrição: ${description}`,
       })
       setNotice('Sua solicitação de atendimento foi enviada com sucesso.')
       setNoticeType('status')
       form.reset()
-      setTechnicianId('')
       setDate('')
-      setTimeSlots([])
+      setSelectedTime('')
     } catch (error) {
       setNotice(error.message)
       setNoticeType('alert')
@@ -155,25 +103,6 @@ function RequestService() {
             ))}
           </select>
         </label>
-        <label className="request-field request-field--wide">
-          <span>Técnico <b aria-hidden="true">*</b></span>
-          <select
-            name="tecnico"
-            value={technicianId}
-            onChange={handleTechnicianChange}
-            required
-            disabled={isLoadingCatalog || technicians.length === 0}
-          >
-            <option disabled value="">
-              {isLoadingCatalog ? 'Carregando técnicos...' : 'Selecione um técnico...'}
-            </option>
-            {technicians.map((technician) => (
-              <option key={technician.id} value={technician.id}>
-                {technician.nome || `Técnico ${technician.id}`}
-              </option>
-            ))}
-          </select>
-        </label>
         <label className="request-field">
           <span>Data desejada <b aria-hidden="true">*</b></span>
           <input
@@ -187,11 +116,16 @@ function RequestService() {
         </label>
         <label className="request-field">
           <span>Horário de preferência <b aria-hidden="true">*</b></span>
-          <select name="horario" defaultValue="" required disabled={isLoadingSlots || timeSlots.length === 0}>
+          <select
+            name="horario"
+            value={selectedTime}
+            onChange={handleTimeChange}
+            required
+          >
             <option disabled value="">
-              {isLoadingSlots ? 'Carregando horários...' : 'Selecione um horário...'}
+              Selecione um horário...
             </option>
-            {timeSlots.map((time) => (
+            {HORARIOS_DISPONIVEIS.map((time) => (
               <option key={time} value={time}>
                 {time} - {Number(time.slice(0, 2)) < 12 ? 'Manhã' : 'Tarde'}
               </option>
@@ -208,14 +142,10 @@ function RequestService() {
             rows="4"
           />
         </label>
-        {(catalogError || (!isLoadingCatalog && (services.length === 0 || technicians.length === 0))) && (
+        {(catalogError || (!isLoadingCatalog && services.length === 0)) && (
           <p className="request-notice" role="alert">
-            {catalogError || 'Não há serviços ou técnicos disponíveis no momento.'}
+            {catalogError || 'Não há serviços disponíveis no momento.'}
           </p>
-        )}
-        {scheduleError && <p className="request-notice" role="alert">{scheduleError}</p>}
-        {!scheduleError && !isLoadingSlots && technicianId && date && timeSlots.length === 0 && (
-          <p className="request-notice" role="status">Não há horários disponíveis para este técnico nesta data.</p>
         )}
         {notice && <p className={`request-notice request-notice--${noticeType}`} role={noticeType}>{notice}</p>}
         <button
@@ -225,10 +155,7 @@ function RequestService() {
             isSubmitting ||
             isLoadingCatalog ||
             Boolean(catalogError) ||
-            services.length === 0 ||
-            technicians.length === 0 ||
-            isLoadingSlots ||
-            Boolean(technicianId && date && timeSlots.length === 0)
+            services.length === 0
           }
         >
           <Send size={17} aria-hidden="true" />

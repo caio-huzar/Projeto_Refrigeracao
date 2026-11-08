@@ -112,11 +112,46 @@ module.exports = {
   async update(req, res) {
     try {
       const { id } = req.params;
+      if (req.usuario.cargo === 'cliente' && Number(id) !== Number(req.usuario.id_cliente)) {
+        return res.status(403).json({ error: 'Acesso negado' });
+      }
+
       const cliente = await Cliente.findByPk(id);
       if (!cliente) return res.status(404).json({ error: 'Cliente nao encontrado' });
 
-      await cliente.update(req.body);
-      return res.json(cliente);
+      const { email, nome, telefone, cpf_cnpj, rua, numero_casa, bairro, cep, cidade, estado } = req.body;
+      const camposAtualizacao = {};
+      if (nome !== undefined) camposAtualizacao.nome = String(nome).trim();
+      if (telefone !== undefined) camposAtualizacao.telefone = String(telefone).trim();
+      if (cpf_cnpj !== undefined) camposAtualizacao.cpf_cnpj = String(cpf_cnpj).trim();
+      if (rua !== undefined) camposAtualizacao.rua = String(rua).trim();
+      if (numero_casa !== undefined) camposAtualizacao.numero_casa = Number(numero_casa);
+      if (bairro !== undefined) camposAtualizacao.bairro = String(bairro).trim();
+      if (cep !== undefined) camposAtualizacao.cep = String(cep).trim();
+      if (cidade !== undefined) camposAtualizacao.cidade = String(cidade).trim();
+      if (estado !== undefined) camposAtualizacao.estado = String(estado).trim();
+
+      await cliente.update(camposAtualizacao);
+
+      if (email && String(email).trim()) {
+        const emailNormalizado = String(email).trim().toLowerCase();
+        const { Op } = require('sequelize');
+        const usuarioExistente = await User.findOne({
+          where: {
+            email: emailNormalizado,
+            id: { [Op.ne]: cliente.id_usuario }
+          }
+        });
+        if (usuarioExistente) {
+          return res.status(400).json({ error: 'Este e-mail já está em uso por outro usuário.' });
+        }
+        await User.update({ email: emailNormalizado }, { where: { id: cliente.id_usuario } });
+      }
+
+      const clienteAtualizado = await Cliente.findByPk(id, {
+        include: { model: User, attributes: ['email', 'cargo', 'esta_ativo'] }
+      });
+      return res.json(clienteAtualizado);
     } catch (error) {
       return res.status(400).json({ error: 'Erro ao atualizar cliente', details: error.message });
     }
