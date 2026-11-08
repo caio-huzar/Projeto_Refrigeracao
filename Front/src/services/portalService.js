@@ -42,3 +42,10 @@ export function listarDadosCliente() {
 export function buscarDadosCliente(id) {
   return apiRequest(`/clientes/${id}`)
 }
+
+export function atualizarDadosCliente(id, dados) {
+  return apiRequest(`/clientes/${id}`, {
+    method: 'PUT',
+    body: JSON.stringify(dados),
+  })
+}
