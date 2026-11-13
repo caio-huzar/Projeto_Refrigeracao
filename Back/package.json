@@ -15,7 +15,8 @@
   "type": "commonjs",
   "main": "index.js",
   "scripts": {
-    "test": "node --test"
+    "test": "node --test",
+    "comprovar-replicacao": "node comprovar_replicacao.js"
   },
   "dependencies": {
     "cors": "^2.8.6",

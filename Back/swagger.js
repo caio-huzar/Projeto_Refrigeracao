@@ -8,6 +8,7 @@ const userSwagger = require('./swagger/userSwagger');
 const horarioSwagger = require('./swagger/horarioSwagger');
 const agendamentoSwagger = require('./swagger/agendamentoSwagger');
 const orcamentoSwagger = require('./swagger/orcamentoSwagger');
+const replicacaoSwagger = require('./swagger/replicacaoSwagger');
 
 const paths = {
     ...authSwagger.paths,
@@ -19,7 +20,8 @@ const paths = {
     ...userSwagger.paths,
     ...horarioSwagger.paths,
     ...agendamentoSwagger.paths,
-    ...orcamentoSwagger.paths
+    ...orcamentoSwagger.paths,
+    ...replicacaoSwagger.paths
 };
 
 const protectedOperations = {
